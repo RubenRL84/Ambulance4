@@ -184,10 +184,12 @@
         android:layout_width="329dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
-
         android:indeterminate="false"
         android:max="32"
         android:min="16"
+        android:progressTint="#00000000"
+        android:progressBackgroundTint="#00000000"
+        android:background="@drawable/ac_bar"
         android:progress="20"
         android:thumb="@drawable/slide_ac"
         app:layout_constraintBottom_toBottomOf="parent"
