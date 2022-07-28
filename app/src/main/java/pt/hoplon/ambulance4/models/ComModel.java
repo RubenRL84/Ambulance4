@@ -227,37 +227,35 @@ public class ComModel extends Observable {
     public void runCheck() {
         Handler hand = new Handler();
 
-        Runnable runCheckCom = new Runnable() {
+        Runnable runCheckCom = new Runnable()
+        {
             final Handler hand = new Handler();
             @Override
-            public void run() {
-                int devCount = 0;
-
-                com.ftdi.j2xx.D2xxManager ftdid2xx = null;
-
-                try {
+            public void run()
+            {
+                int devCount;
+                com.ftdi.j2xx.D2xxManager ftdid2xx;
+                try
+                {
                     ftdid2xx = D2xxManager.getInstance(mContext);
                     devCount = ftdid2xx.createDeviceInfoList(mContext);
-
-                    if (!(devCount > 0 )){
-
+                    if(!(devCount > 0 ))
+                    {
                         mDevice.close();
                         SendData((byte) 2,(byte)0,(byte)4);
                     }
-                    else{
+                    else
+                    {
                         Toast.makeText(mContext, "board conectada", Toast.LENGTH_SHORT).show();
-
                         ComConnect();
                     }
-
-                } catch (Exception e) {
+                }
+                catch(Exception e)
+                {
                     //nothing
                 }
                 hand.postDelayed(this,500);
             }
-
-
-
         };
         hand.post(runCheckCom);
 
