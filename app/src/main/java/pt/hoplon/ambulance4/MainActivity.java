@@ -1,25 +1,19 @@
 package pt.hoplon.ambulance4;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-
 import java.util.ArrayList;
-
 import pt.hoplon.ambulance4.models.ComModel;
 import pt.hoplon.ambulance4.models.Tecla;
 
@@ -33,9 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ComModel comTest;
     ArrayList<Tecla> teclas;
     private int pval = 0;
-    private static int MAX_VALUE = 32;
-    private static int MIN_VALUE = 16;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         extrator = new Tecla((byte)20,extratorIcon,R.drawable.extrator_on,R.drawable.extrator_off,"Off","off",(byte)0,(byte)0,(byte)0,(byte)1,"oi",(byte)1,(byte)0);
         teclas.add(extrator);
 
-        sBar = (SeekBar) findViewById(R.id.seekBar);
-        acValue = (TextView) findViewById(R.id.acValue);
+        sBar = findViewById(R.id.seekBar);
+        acValue = findViewById(R.id.acValue);
         acValue.setText(sBar.getProgress()+"º" );
         System.out.println(sBar.getProgress());
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -117,16 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-    mRunner = () -> {
-    runOnUiThread((new Runnable() {
-        @Override
-        public void run() {
-            checkTeclas();
-        }
-    }));
-
-    };
+    mRunner = () -> runOnUiThread((this::checkTeclas));
         mHandler.post(mRunner);
+
+        comTest.runCheck();
     }
     private void changeTecla(Tecla T){
         for(int i =0; i < teclas.size();i++){
@@ -134,21 +121,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (T.state){
                     case 0:
                         int finalI = i;
-                        runOnUiThread((new Runnable() {
-                            @Override
-                            public void run() {
-                                T.icon.setImageResource(teclas.get(finalI).imgOff);
-                            }
-                        }));
+                        runOnUiThread((() -> T.icon.setImageResource(teclas.get(finalI).imgOff)));
                         break;
                     case 1:
                         int finalI1 = i;
-                        runOnUiThread((new Runnable() {
-                            @Override
-                            public void run() {
-                                T.icon.setImageResource(teclas.get(finalI1).imgOn);
-                            }
-                        }));
+                        runOnUiThread((() -> T.icon.setImageResource(teclas.get(finalI1).imgOn)));
 
                         break;
                 }
@@ -168,31 +145,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(int i =0; i < teclas.size();i++){
                     if(comTest.GetFBit(teclas.get(i).Function )){
                         int finalI = i;
-                        runOnUiThread((new Runnable() {
-                            @Override
-                            public void run() {
+                        runOnUiThread((() -> {
 
-                                teclas.get(finalI).icon.setImageResource(teclas.get(finalI).imgOn);
-                                teclas.get(finalI).state = 1;
-                            }
+                            teclas.get(finalI).icon.setImageResource(teclas.get(finalI).imgOn);
+                            teclas.get(finalI).state = 1;
                         }));
 
 
 
                     }else{
                         int finalI1 = i;
-                        runOnUiThread((new Runnable() {
-                            @Override
-                            public void run() {
-                                teclas.get(finalI1).icon.setImageResource(teclas.get(finalI1).imgOff);
-                                teclas.get(finalI1).state = 0;
-                            }
+                        runOnUiThread((() -> {
+                            teclas.get(finalI1).icon.setImageResource(teclas.get(finalI1).imgOff);
+                            teclas.get(finalI1).state = 0;
                         }));
 
                     }
 
                 }
-                System.out.println(comTest.getBat().get(0));
                 double value1 = comTest.getBat().get(0);
                 double value2  = comTest.getBat().get(1);
                 bat1.setText(String.format("%.1f", comTest.getBat().get(0))+" V");
@@ -221,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 mHandler.postDelayed(mRunner,500 );
             }catch (Exception e){
-                System.out.println(e);
+                Log.e("Error: ", String.valueOf(e));
             }
 
         };
@@ -229,27 +199,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     public void onClick(View view) {
 
                         ImageView b = (ImageView) view;
                         switch (b.getId()){
                             case R.id.estribo:
-                                byte state =  estribo.state;
-                                if( state == 1) {
-                                    state = 0;
-                                }else{
-                                    state = 1;
-                                }
-                                comTest.SendData((byte)1,(byte)14,state);
-                                estribo.state = state;
+                                comTest.SendData((byte)1,estribo.Function,getState(estribo.state));
+                                estribo.state = getState(estribo.state);
                                 changeTecla(estribo);
                                 break;
+                            case R.id.luz_int_esq:
+                                comTest.SendData((byte)1,luzPenumbraEsq.Function,getState(luzPenumbraEsq.state));
+                                luzPenumbraEsq.state = getState(luzPenumbraEsq.state);
+                                changeTecla(luzPenumbraEsq);
+                                break;
+                            case R.id.luz_int_penunbra:
+                                comTest.SendData((byte)1,luzPenumbra.Function,getState(luzPenumbra.state));
+                                luzPenumbra.state = getState(luzPenumbra.state);
+                                changeTecla(luzPenumbra);
+                                break;
+                            case R.id.luz_int_dir:
+                                comTest.SendData((byte)1,luzPenumbraDir.Function,getState(luzPenumbraDir.state));
+                                luzPenumbraDir.state = getState(luzPenumbraDir.state);
+                                changeTecla(luzPenumbraDir);
+                                break;
+                            case R.id.coluna:
+                                comTest.SendData((byte)1,coluna.Function,getState(coluna.state));
+                                coluna.state = getState(coluna.state);
+                                changeTecla(coluna);
+                                break;
+                            case R.id.ventilador:
+                                comTest.SendData((byte)1,ventilador.Function,getState(ventilador.state));
+                                ventilador.state = getState(ventilador.state);
+                                changeTecla(ventilador);
+                                break;
+                            case R.id.extrator:
+                                comTest.SendData((byte)1,extrator.Function,getState(extrator.state));
+                                extrator.state = getState(extrator.state);
+                                changeTecla(extrator);
+                                break;
                             case R.id.ac_minus:
-
                                     sBar.setProgress(sBar.getProgress() - 1,true);
                                     acValue.setText(sBar.getProgress()+"º");
-
 
                                 break;
                             case R.id.ac_plus:
@@ -263,11 +257,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
 
-
-
-
+    private byte getState(byte state) {
+        if( state == 1) {
+            state = 0;
+        }else{
+            state = 1;
+        }
+        return state;
 
     }
+
+
+}
 
 
 

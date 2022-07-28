@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView12"
         app:srcCompat="@drawable/porta_aberta_on" />
@@ -21,18 +21,18 @@
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="116dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chave_on" />
+
 
     <ImageView
         android:id="@+id/imageView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11"
         app:srcCompat="@drawable/bat_on" />
@@ -42,38 +42,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView13"
         app:srcCompat="@drawable/_20_on" />
-
 
     <ImageView
         android:id="@+id/estribo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/luz_int_esq"
         app:layout_constraintEnd_toStartOf="@+id/luz_int_esq"
         app:layout_constraintTop_toTopOf="@+id/luz_int_esq"
-        app:layout_constraintVertical_bias="0.196"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/estribo_on" />
 
     <ImageView
         android:id="@+id/imageView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView14"
         app:srcCompat="@drawable/park_on" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="329dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="52dp"
+        android:layout_width="321dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/ac_bar"
         android:clickable="false"
         android:focusableInTouchMode="false"
@@ -85,12 +83,13 @@
         android:thumb="@drawable/slide_ac"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.439"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/acValue"
-        android:layout_width="40dp"
-        android:layout_height="36dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:fontFamily="sans-serif-light"
         android:text="-"
         android:textAlignment="center"
@@ -104,10 +103,11 @@
         android:id="@+id/luz_int_esq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="58dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/luz_int_penunbra"
         app:layout_constraintEnd_toStartOf="@+id/luz_int_penunbra"
         app:layout_constraintTop_toTopOf="@+id/luz_int_penunbra"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/luz_esquerda_on" />
 
     <ImageView
@@ -124,27 +124,29 @@
         android:id="@+id/luz_int_dir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/luz_int_penunbra"
         app:layout_constraintStart_toEndOf="@+id/luz_int_penunbra"
         app:layout_constraintTop_toTopOf="@+id/luz_int_penunbra"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/luz_direita_on" />
 
     <ImageView
         android:id="@+id/coluna"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/luz_int_dir"
         app:layout_constraintStart_toEndOf="@+id/luz_int_dir"
         app:layout_constraintTop_toTopOf="@+id/luz_int_dir"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/coluna_on" />
 
     <ImageView
         android:id="@+id/imageView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="240dp"
+        android:layout_marginBottom="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +175,7 @@
         android:id="@+id/ventilador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/pwm_minus"
         app:layout_constraintEnd_toStartOf="@+id/pwm_minus"
         app:layout_constraintTop_toTopOf="@+id/pwm_minus"
@@ -184,7 +186,7 @@
         android:id="@+id/extrator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/pwm_plus"
         app:layout_constraintStart_toEndOf="@+id/pwm_plus"
         app:layout_constraintTop_toTopOf="@+id/pwm_plus"
@@ -193,29 +195,31 @@
 
     <ImageView
         android:id="@+id/ac_plus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
         app:layout_constraintStart_toEndOf="@+id/acValue"
         app:layout_constraintTop_toTopOf="@+id/seekBar"
+        app:layout_constraintVertical_bias="0.473"
         app:srcCompat="@drawable/mais_ac_on" />
 
     <ImageView
         android:id="@+id/ac_minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/seekBar"
         app:layout_constraintTop_toTopOf="@+id/seekBar"
+        app:layout_constraintVertical_bias="0.473"
         app:srcCompat="@drawable/menos_ac_on" />
 
     <ImageView
         android:id="@+id/imageView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/ac_plus"
         app:layout_constraintStart_toEndOf="@+id/ac_plus"
         app:layout_constraintTop_toTopOf="@+id/ac_plus"
@@ -224,51 +228,56 @@
 
     <ImageView
         android:id="@+id/imageView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView28"
         app:layout_constraintStart_toEndOf="@+id/imageView28"
         app:layout_constraintTop_toTopOf="@+id/imageView28"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/v2_on" />
 
     <ImageView
         android:id="@+id/imageView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView29"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView29"
         app:layout_constraintTop_toTopOf="@+id/imageView29"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/v3_on" />
 
     <ImageView
         android:id="@+id/imageView31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/ac_minus"
         app:layout_constraintEnd_toStartOf="@+id/ac_minus"
         app:layout_constraintTop_toTopOf="@+id/ac_minus"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ac_auto_on" />
 
     <ImageView
         android:id="@+id/imageView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView31"
         app:layout_constraintEnd_toStartOf="@+id/imageView31"
         app:layout_constraintTop_toTopOf="@+id/imageView31"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ac_on" />
 
     <ImageView
         android:id="@+id/imageView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView34"
         app:layout_constraintEnd_toStartOf="@+id/imageView34"
         app:layout_constraintTop_toTopOf="@+id/imageView34"
@@ -279,8 +288,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="524dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="153dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="176dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -290,7 +299,7 @@
         android:id="@+id/bat1Bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView33"
         app:layout_constraintEnd_toEndOf="@+id/imageView33"
         app:layout_constraintStart_toStartOf="@+id/imageView33"
@@ -300,9 +309,10 @@
         android:id="@+id/bat2Bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView34"
         app:layout_constraintEnd_toEndOf="@+id/imageView34"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="@+id/imageView34"
         app:srcCompat="@drawable/bat_2_empty" />
 
@@ -325,5 +335,19 @@
         app:layout_constraintBottom_toTopOf="@+id/bat2Bar"
         app:layout_constraintEnd_toEndOf="@+id/bat2Bar"
         app:layout_constraintStart_toStartOf="@+id/bat2Bar" />
+
+    <TextView
+        android:id="@+id/tempView"
+        android:layout_width="55dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
+        android:contextClickable="false"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="20º"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView32"
+        app:layout_constraintEnd_toStartOf="@+id/imageView32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView32" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

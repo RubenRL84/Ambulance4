@@ -1,22 +1,20 @@
 package pt.hoplon.ambulance4.models;
-
-
 import android.widget.ImageView;
 
 public class Tecla {
-    public byte Function;
-    public ImageView icon;
-    public int imgOn;
-    public int imgOff;
-    public String onOff;
-    public String dea;
+    public final byte Function;
+    public final ImageView icon;
+    public final int imgOn;
+    public final int imgOff;
+    public final String onOff;
+    public final String dea;
     public byte state; //indica o estado da tecla 0-off 1-on 2-deactivated
-    public byte Tipo; //0 - Standard, 1 - Shortcut, 2 - Setpoint
-    public byte Direction; //0 - up, 1 - down
-    public int limit;
-    public String variable;
-    public byte Step;
-    public byte JustOff;
+    public final byte Tipo; //0 - Standard, 1 - Shortcut, 2 - Setpoint
+    public final byte Direction; //0 - up, 1 - down
+    public final int limit;
+    public final String variable;
+    public final byte Step;
+    public final byte JustOff;
 
     public Tecla(byte function,ImageView icon, int imgOn,int imgOff, String onOff, String dea, byte state, byte tipo, byte direction, int limit, String variable, byte step, byte justOff) {
         Function = function;

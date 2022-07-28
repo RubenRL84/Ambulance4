@@ -4,18 +4,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
 
-
 public class ComModel extends Observable {
     private D2xxManager ftdid2xx;
     private FT_Device mDevice;
-    private final Handler mHandler = new Handler();
-    private Runnable mRunner;
     private final Context mContext;
     private final int devCount;
     private final byte[] rx = new byte[64];
@@ -30,12 +26,10 @@ public class ComModel extends Observable {
         }
         assert ftdid2xx != null;
         this.devCount = ftdid2xx.createDeviceInfoList(mContext);
-        Toast.makeText(mContext,"Number listed: : "+ ftdid2xx.createDeviceInfoList(mContext) ,Toast.LENGTH_SHORT).show();
+        Log.i("Number listed: " , String.valueOf(ftdid2xx.createDeviceInfoList(mContext)));
     }
 
     public void ComConnect(){
-
-
         if(this.devCount > 0){
             mDevice = this.ftdid2xx.openByIndex(mContext, 0);
             if(mDevice.isOpen()) {
@@ -49,89 +43,69 @@ public class ComModel extends Observable {
                         (byte)0, (byte)0);
                 // set RTS/CTS flow control
                 mDevice.setFlowControl((short)0x0000, (byte) 0x0b, (byte) 0x0d);
-
-
-
             }
         } else{
-            Toast.makeText(mContext,"No connection",Toast.LENGTH_SHORT).show();
-
+            Log.i("FTDID2xx: ","No connection");
         }
     }
 
     public void getData()
     {
-
-        final int[] rx1 = new int[1024];
-        if(mDevice != null){
-            if(mDevice.getQueueStatus() > 0){
-                System.out.println("OIOIOIOIOIOIOI");
+        if(mDevice != null)
+        {
+            if(mDevice.getQueueStatus() > 0)
+            {
+                Log.i("FT_DEVICE: ", "new array");
                 mDevice.read(this.rx,64,0);
                 if(this.rx[0] != 1 &&  this.rx[1] != 16 && this.rx[2] != 85 && this.rx[63] != 4)
                 {
                     resetBuffer();
                 }
             }
-        }else{
-
-
+        }
+        else
+        {
             ComConnect();
         }
-
-
-
     }
 
     private void resetBuffer() {
-        if( mDevice != null){
+        if( mDevice != null)
+        {
             mDevice.purge((byte) 0x01);
             mDevice.purge((byte) 0x02);
-            if(mDevice.getQueueStatus() > 0){
-                System.out.println("TEM DADOS");
+            if(mDevice.getQueueStatus() > 0)
+            {
+                Log.i("Buffer: ", "Resetting Buffer");
                 getData();
             }
         }
     }
 
-    public ArrayList<Double> getBat(){
+    public ArrayList<Double> getBat()
+    {
         //calc bat1 and bat 2
         double vol1 = rx[33];
         vol1 = vol1 + (rx[32] * 256);
         vol1 = vol1 * (2.056 / 4096);
         vol1 = vol1 * 10;
         vol1 = vol1 / 1.04;
-        System.out.println("Vol1: "+ vol1);
+
         double vol2 = rx[35];
         vol2 = vol2 + (rx[34] * 256);
         vol2 = vol2 * (2.056 / 4096);
         vol2 = vol2 * 10;
         vol2 = vol2 / 1.04;
-        System.out.println("Vol2: "+ vol2);
         ArrayList<Double> volts = new ArrayList<>();
         volts.add(vol1);
         volts.add(vol2);
         return(volts);
     }
 
+
+
     public Boolean GetFBit( int Function)
     {
-
-//        if(this.rx[0] == 1 &&  this.rx[1] == 16 && this.rx[2] == 85 && this.rx[63] == 4)
-//        {
-//            System.out.println("Array ok");
-//        }
-//        int chk = 0;
-//        for (int j = 1; j <= 61; j++)
-//        {
-//            chk += (this.rx[j] & 0xFF);
-//            if (chk > 255)
-//                chk = chk - 256;
-//        }
-//        if((this.rx[62] & 0xFF) == chk)
-//        {
-//            System.out.println("checksum ok");
-//        }
-
         int [] rx1 = new int[64];
         for(int j = 0; j < this.rx.length;j++)
         {
@@ -139,7 +113,6 @@ public class ComModel extends Observable {
             System.out.print(( rx1[j] & 0xFF)+"-");
         }
         System.out.println(" ");
-
         int B;
         Function--;
         if (Function < 8)
@@ -154,12 +127,10 @@ public class ComModel extends Observable {
         return ( this.rx[19 - B]  & (1 << b)) != 0;
     }
 
-    public boolean SendData(byte cmd, byte subcmd, byte onoff)
+    public void SendData(byte cmd, byte subcmd, byte onoff)
     {
         int retornoWrite;
-        int counterwrite = 0;
-
-        Log.w("Ambulance2", "chamou senddata com os valores "+cmd+ ", "+ subcmd+", "+onoff);
+        Log.w("Ambulance", "Enviou os valores "+cmd+ ", "+ subcmd+", "+onoff);
         byte[] msgBuffer = new byte[64];
 
         msgBuffer[0] = 1;
@@ -231,35 +202,64 @@ public class ComModel extends Observable {
         for (int i = 1; i <= 62; i++)
         {
             chk = chk + msgBuffer[i];
-            if (chk > 255)
-                chk = chk - 256;
+            if (chk > 255) chk = chk - 256;
         }
-
         msgBuffer[62] = (byte)chk;
-
         try
         {
             retornoWrite = mDevice.write(msgBuffer);
-
-            if(retornoWrite>0){
-                counterwrite++;
-//                Toast.makeText(mContext, "envio da msg com sucesso!", Toast.LENGTH_SHORT).show();
-//                txtWrite.setText("write"+counterwrite+" - "+Integer.toString(retornoWrite));
-                return true;
+            if(retornoWrite>0)
+            {
+                Log.i("SENDDATA: ","OK");
             }
-            else {
-                mDevice =null;
-
-                return false;
+            else
+            {
+                Log.e("SENDDATA: ","FAILED");
+                mDevice = null;
             }
         }
         catch (Exception ex)
         {
-//            Toast.makeText(this, "Erro : " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-//            Toast.makeText(mContext, "exception senddata", Toast.LENGTH_SHORT).show();
-            return false;
+            Log.e("SENDDATA: ","FAILED");
         }
+    }
 
+    public void runCheck() {
+        Handler hand = new Handler();
+
+        Runnable runCheckCom = new Runnable() {
+            final Handler hand = new Handler();
+            @Override
+            public void run() {
+                int devCount = 0;
+
+                com.ftdi.j2xx.D2xxManager ftdid2xx = null;
+
+                try {
+                    ftdid2xx = D2xxManager.getInstance(mContext);
+                    devCount = ftdid2xx.createDeviceInfoList(mContext);
+
+                    if (!(devCount > 0 )){
+
+                        mDevice.close();
+                        SendData((byte) 2,(byte)0,(byte)4);
+                    }
+                    else{
+                        Toast.makeText(mContext, "board conectada", Toast.LENGTH_SHORT).show();
+
+                        ComConnect();
+                    }
+
+                } catch (Exception e) {
+                    //nothing
+                }
+                hand.postDelayed(this,500);
+            }
+
+
+
+        };
+        hand.post(runCheckCom);
 
     }
 
